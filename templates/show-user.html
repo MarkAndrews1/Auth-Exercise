@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}
+{{user.username}}
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>{{user.username}}</h1>
+    <div>
+        <h2>Details</h2>
+        <ul>
+            <li> <b>Username:</b> <i>{{user.username}}</i></li>
+            <li><b>Email:</b> <i>{{user.email}}</i></li>
+            <li><b>First Name:</b> <i>{{user.first_name}}</i></li>
+            <li><b>Last Name:</b> <i>{{user.last_name}}</i></li>
+        </ul>
+    </div>
+
+    <div>
+        <h2>Feedback</h2>
+        <ul>
+            {% for fb in user.feedback %}
+
+            <li>
+                <h3>{{fb.title}}</h3>
+                <p><small>{{fb.content}}</small></p>
+                
+            </li>
+            <form>
+                {{form.hidden_tag()}}
+                <button class="btn btn-primary" formmethod="get" formaction="/feedback/{{fb.id}}/update">Edit</button>
+                <button class="btn btn-danger" formmethod="post" formaction="/feedback/{{fb.id}}/delete">Delete</button>
+            </form>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        <form>
+            <button class="btn btn-primary" formmethod="get" formaction="/users/{{user.username}}/feedback/add">Add
+                Feedback</button>
+            <button class="btn btn-danger" formmethod="post" formaction="/users/{{user.username}}/delete">Delete
+                User</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
